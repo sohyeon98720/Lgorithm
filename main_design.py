@@ -1,4 +1,7 @@
+import os
 import sys
+sys.path.insert(0, os.getcwd())
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtChart import QChart, QChartView, QPieSeries
 from PyQt5 import uic
@@ -8,7 +11,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QPainter
 from PyQt5.QtCore import Qt
 import numpy as np
+
 ###TODO: [지혜] 기본적인 디자인 부탁
+
+def closeEvent(self, event):
+    self.deleteLater()
 
 form_class = uic.loadUiType("design_main.ui")[0]
 form_recom = uic.loadUiType("design_recom.ui")[0]
@@ -28,6 +35,9 @@ class WindowClass(QMainWindow, form_class):
         self.radioButton_count.clicked.connect(self.piechart_count)
         self.radioButton_price.clicked.connect(self.piechart_price)
         self.connect = ForUI()
+
+
+
 
     def _mousePressEvent(self, event):
         self.lineEdit_cust_id.clear()
@@ -56,12 +66,18 @@ class WindowClass(QMainWindow, form_class):
             self.label_gender.setText(cust_info[0])
             self.label_age.setText(cust_info[1])
             self.label_zon.setText(cust_info[2])
+            if cust_info:
+                hs = "있음"
+            else:
+                hs = "없음"
+            self.label_cust_num.setText(hs)
             self.if_history = cust_info[3]
             self.if_cust = True
         else: # 고객X
             self.label_gender.setText("")
             self.label_age.setText("올바른 고객번호를\n입력해주세요!")
             self.label_zon.setText("")
+            self.label_cust_num.setText("")
             self.resetTextFunction()
             ###TODO: [승건] setText대신 오류메세지로 바꿨으면 좋겠음
 
@@ -106,6 +122,13 @@ class NewWindow(QWidget,form_recom):
         self.connect = ForUI()
         self.cust_id = cust_id
         self.if_history = if_history
+        if self.if_history:
+            self.arr = self.connect.most_common(self.cust_id)
+            arr2 = self.connect.ncf(self.cust_id)
+            self.arr.extend(arr2)
+        else:
+            self.arr = self.connect.for_no_history(self.cust_id)
+
         self.lower_bound = self.connect.if_lower_bound
         self.setupUi(self)
         self.setWindowTitle("LPOINT")
@@ -115,12 +138,16 @@ class NewWindow(QWidget,form_recom):
     def set_recom(self):
         layout = self.grid_prod
         if self.if_history: #소현-지혜(일단 소현만 진행)
-            ###TODO: [지혜] 추천 알고리즘 넣을 때 비율 정해서 넣기
-            arr = self.connect.most_common(self.cust_id)
+            ###TODO: [지혜] 추천 알고리즘 넣을 때 비율 정해서 넣기 지혜: 네~~
+            self.cust_cnt.setText('N회') #수정해야됨ㅋ
+
+
         else: # 승건
-            arr = self.connect.for_no_history(self.cust_id)
-        for i in range(len(arr)):
-            label = QLabel(arr[i])
+            self.cust_cnt.setText('0회')  # 수정해야됨ㅋ
+
+
+        for i in range(len(self.arr)):
+            label = QLabel(self.arr[i])
             label.setAlignment(QtCore.Qt.AlignCenter)
             layout.addWidget(label,i//3,i%3) ### TODO: [소현]외부 링크를 통해 사진 및 텍스트로 대체 예정
         self.setLayout(layout)
