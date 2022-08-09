@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>회원번호</string>
+    <string>회원번호를 입력해주세요</string>
    </property>
   </widget>
   <widget class="QWidget" name="horizontalLayoutWidget">
@@ -52,21 +52,30 @@
     <item>
      <widget class="QLabel" name="label_gender">
       <property name="text">
-       <string>TextLabel</string>
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_age">
       <property name="text">
-       <string>TextLabel</string>
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
     <item>
      <widget class="QLabel" name="label_zon">
       <property name="text">
-       <string>TextLabel</string>
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
       </property>
      </widget>
     </item>
@@ -93,22 +102,6 @@
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QScrollBar" name="verticalScrollBar">
-   <property name="geometry">
-    <rect>
-     <x>630</x>
-     <y>90</y>
-     <width>20</width>
-     <height>581</height>
-    </rect>
-   </property>
-   <property name="layoutDirection">
-    <enum>Qt::LeftToRight</enum>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
-   </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">

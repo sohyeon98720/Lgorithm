@@ -15,6 +15,7 @@ list_category = ['유통사','숙박업종','엔터테인먼트','F&B','렌탈�
 class ForUI():
     def __init__(self) -> None:
         # self.cust_id = cust_id
+        self.lower_bound = np.percentile(list(tbl_pdde.groupby(['cust']).count()['rct_no']),25)
         pass
         
     def if_history(self,cust_id):
