@@ -22,11 +22,11 @@ class DataLoader:
         self.SC = []
 
         # context vector
-        self.item_vector = pd.read_csv(os.path.join(os.path.abspath('.'),'ncf', self.datapath + 'item.csv'), encoding='utf-8')
+        self.item_vector = pd.read_csv(os.path.join(os.path.abspath('.'),'neuralCF', self.datapath + 'item.csv'), encoding='utf-8')
         if train:
-            self.user_vector = pd.read_csv(os.path.join(os.path.abspath('.'),'ncf', self.datapath + 'user.csv'), encoding='utf-8')
+            self.user_vector = pd.read_csv(os.path.join(os.path.abspath('.'),'neuralCF', self.datapath + 'user.csv'), encoding='utf-8')
         else:
-            self.user_vector = pd.read_csv(os.path.join(os.path.abspath('.'),'ncf', self.datapath + 'allusers.csv'), encoding='utf-8')
+            self.user_vector = pd.read_csv(os.path.join(os.path.abspath('.'),'neuralCF', self.datapath + 'allusers.csv'), encoding='utf-8')
 
         item_context, user_context = self.label_encoding()
 

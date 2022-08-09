@@ -108,6 +108,9 @@
       <property name="text">
        <string>고객 구매 이력</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </item>
     <item alignment="Qt::AlignHCenter">
@@ -126,6 +129,9 @@
       </property>
       <property name="text">
        <string>  </string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
