@@ -15,19 +15,23 @@ list_category = ['유통사','숙박업종','엔터테인먼트','F&B','렌탈�
 class ForUI():
     def __init__(self) -> None:
         # self.cust_id = cust_id
-        self.lower_bound = np.percentile(list(tbl_pdde.groupby(['cust']).count()['rct_no']),25)
         pass
         
     def if_history(self,cust_id):
-        ### TODO: [승건]구매이력이 없는 고객의 경우
-        return True
+        self.pdde_tmp = tbl_pdde[tbl_pdde.cust == cust_id]
+        if len(self.pdde_tmp) > 0:
+            return True
+        else:
+            return False
 
     def personal_info(self,cust_id):
-        if self.if_history(cust_id):
+        self.tbl_tmp = tbl_demo[tbl_demo.cust == cust_id]
+        if_history = self.if_history(cust_id)
+        if len(self.tbl_tmp) != 0: # 고객인 경우
             tbl_tmp = tbl_demo[tbl_demo.cust == cust_id]
-            return [tbl_tmp.iloc[0]['ma_fem_dv'],tbl_tmp.iloc[0]['ages'],tbl_tmp.iloc[0]['zon_hlv']]
+            return [tbl_tmp.iloc[0]['ma_fem_dv'],tbl_tmp.iloc[0]['ages'],tbl_tmp.iloc[0]['zon_hlv'],if_history]
         else:
-            return False # 구매 이력이 없는 고객인 경우
+            return None # 고객이 아닌 경우
     
     def por_count(self,cust_id):
         tmp = []
@@ -39,14 +43,14 @@ class ForUI():
     def por_price(self):
         pass
 
-    def if_lower_bounde(self,cust_id):
+    def if_lower_bound(self,cust_id):
         return True if len(tbl_pdde[tbl_pdde.cust==cust_id]) >= lower_bound else False
         # 상위 75프로면 True 아니면 False
 
     def most_common(self,cust_id):
-        # 구매이력 기반 장바구니 알고리즘(대분류)
+        # 구매이력 기반 장바구니 알고리즘(소분류)
         cust_tmp = pd.merge(left=tbl_pdde[tbl_pdde.cust==cust_id], right=tbl_pd_clac, on='pd_c')
-        list_pd = cust_tmp.groupby('rct_no')['clac_hlv_nm'].apply(list)
+        list_pd = cust_tmp.groupby('rct_no')['pd_nm'].apply(list)
         dataset = list(list_pd)
         
         te = TransactionEncoder()
@@ -55,5 +59,32 @@ class ForUI():
 
         frequent_itemsets = apriori(df,min_support=0.01,use_colnames=True)
         frequent_itemsets.sort_values(by=['support'],axis=0,ascending=False,inplace=True)
-        return frequent_itemsets[:5]
+        tmp = frequent_itemsets[:5]['itemsets'].values.tolist()
+        return sum([list(x) for x in tmp],[])
         
+    def for_no_history(self,cust_id):
+        df_1 = tbl_demo[['cust','ma_fem_dv','ages', 'zon_hlv']]
+        df_2 = tbl_pdde[['cust', 'pd_c', 'buy_ct', 'chnl_dv']]
+        df_4 = tbl_pd_clac
+
+        df_1_2 = pd.merge(df_1, df_2)
+        df_orig = pd.merge(df_1_2, df_4)
+
+        input_cust_sex = list(tbl_demo[tbl_demo['cust'] == cust_id]['ma_fem_dv'])[0]
+        input_cust_ages = list(tbl_demo[tbl_demo['cust'] ==cust_id]['ages'])[0]
+        input_cust_local = list(tbl_demo[tbl_demo['cust'] == cust_id]['zon_hlv'])[0]
+
+        df_orig = df_orig.groupby(['ma_fem_dv', 'ages', 'zon_hlv'])['pd_nm'].apply(', '.join).reset_index()
+
+        condition = (df_orig.ma_fem_dv == input_cust_sex) & (df_orig.ages == input_cust_ages) & (
+                    df_orig.zon_hlv == input_cust_local)
+
+        df_personalize = df_orig[condition]
+
+        df_pd_nm_list = list(df_personalize['pd_nm'])[0]
+
+        df_pd_nm_list = pd.DataFrame([df_pd_nm_list.split(',')]).T.value_counts()
+
+        df_recommend = list(pd.DataFrame([df_pd_nm_list]).columns)[:5]
+
+        return [np.array(df_recommend[i])[0].split(' ')[1] for i in range(5)]

@@ -7,6 +7,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 # from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtGui import QPainter
 from PyQt5.QtCore import Qt
+import numpy as np
+###TODO: [지혜] 기본적인 디자인 부탁
 
 form_class = uic.loadUiType("design_main.ui")[0]
 form_recom = uic.loadUiType("design_recom.ui")[0]
@@ -29,18 +31,21 @@ class WindowClass(QMainWindow, form_class):
 
     def _mousePressEvent(self, event):
         self.lineEdit_cust_id.clear()
-        self.lineEdit_cust_id.mousePressEvent = None
+        # self.lineEdit_cust_id.mousePressEvent = None
 
-    def changeWindowFunction(self): ### TODO: 추가적으로 창 하나만 띄워졌으면 좋겠음
-        # self.hide()
+    def changeWindowFunction(self): ### TODO: [승건]창 하나만 띄워졌으면 좋겠음
         if self.if_cust:
             self.nw_recom = NewWindow(self.cust_id,self.if_history)
+            # self.hide()
+            # self.nw_recom.show()
+            # if self.nw_recom.close():
+            #     self.show()
         else:
-            print("회원번호먼저 입력해주세요!") ###TODO: 오류메세지로 바꾸기
-        # self.show()
+            pass
+            # print("회원번호먼저 입력해주세요!") ###TODO: [승건]오류메세지로 바꾸기
 
     def resetTextFunction(self):
-        self.lineEdit_cust_id.setText("")
+        self.lineEdit_cust_id.clear()
 
     def printTextFunction(self) :
         # 고객번호 -> 인적사항 출력
@@ -48,20 +53,24 @@ class WindowClass(QMainWindow, form_class):
         # M035502859 - M263323245 -> 순서대로 구매이력O,구매이력X
         cust_info = self.connect.personal_info(self.cust_id)
         if cust_info: # 고객O
-            self.if_history = self.connect.if_history(self.cust_id)
             self.label_gender.setText(cust_info[0])
             self.label_age.setText(cust_info[1])
             self.label_zon.setText(cust_info[2])
+            self.if_history = cust_info[3]
             self.if_cust = True
         else: # 고객X
-            pass   ###TODO: [승건]검색테이블에 없을 때 오류메세지 출력
+            self.label_gender.setText("")
+            self.label_age.setText("올바른 고객번호를\n입력해주세요!")
+            self.label_zon.setText("")
+            self.resetTextFunction()
+            ###TODO: [승건] setText대신 오류메세지로 바꿨으면 좋겠음
 
     def changeTextFunction(self) :
         self.printTextFunction()
     
     def piechart_count(self):
         ###TODO: [승건]새로운 창에 만드는거말고 기존 창에 표시하기
-        ###TODO: [승건]차트에 (마우스갖다대면) 비율 표시
+        ###TODO: [승건]차트에 비율 표시
         if self.if_cust:
             tmp = self.connect.por_count(self.cust_id)
             self.series = QPieSeries()
@@ -87,7 +96,7 @@ class WindowClass(QMainWindow, form_class):
         self.setCentralWidget(chartview)
     
     def piechart_price(self):
-        ###TODO: [승건] 만들기
+        ###TODO: [소현] 만들기
         pass
             
 
@@ -97,19 +106,25 @@ class NewWindow(QWidget,form_recom):
         self.connect = ForUI()
         self.cust_id = cust_id
         self.if_history = if_history
-        self.lower_bound = self.connect.lower_bound
-        print(self.lower_bound)
+        self.lower_bound = self.connect.if_lower_bound
         self.setupUi(self)
         self.setWindowTitle("LPOINT")
+        self.show() ###TODO: 실행이 느려서 cust_id들어오면 미리 추천 계산해놓고 new window에서는 띄우기만 하는게 좋을듯
         self.set_recom()
-        self.show()
 
     def set_recom(self):
-        if self.if_history: #소현-지혜
-            pass
+        layout = self.grid_prod
+        if self.if_history: #소현-지혜(일단 소현만 진행)
+            ###TODO: [지혜] 추천 알고리즘 넣을 때 비율 정해서 넣기
+            arr = self.connect.most_common(self.cust_id)
         else: # 승건
-            pass
-        
+            arr = self.connect.for_no_history(self.cust_id)
+        for i in range(len(arr)):
+            label = QLabel(arr[i])
+            label.setAlignment(QtCore.Qt.AlignCenter)
+            layout.addWidget(label,i//3,i%3) ### TODO: [소현]외부 링크를 통해 사진 및 텍스트로 대체 예정
+        self.setLayout(layout)
+
 
 if __name__ == "__main__" :
     app = QApplication(sys.argv)
