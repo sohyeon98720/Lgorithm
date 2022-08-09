@@ -143,8 +143,7 @@ class NewWindow(QWidget,form_recom):
 
 
         else: # 승건
-            self.cust_cnt.setText('0회')  # 수정해야됨ㅋ
-
+            self.cust_cnt.setText('0회')
 
         for i in range(len(self.arr)):
             label = QLabel(self.arr[i])
