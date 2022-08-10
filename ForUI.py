@@ -64,7 +64,7 @@ class ForUI():
         cust_tmp = pd.merge(left=tbl_pdde[tbl_pdde.cust == cust_id], right=tbl_pd_clac, on='pd_c')
         list_pd = cust_tmp.groupby('rct_no')['pd_nm'].apply(list)
         dataset = list(list_pd)
-
+        #
         te = TransactionEncoder()
         te_ary = te.fit(dataset).transform(dataset)
         df = pd.DataFrame(te_ary, columns=te.columns_)
