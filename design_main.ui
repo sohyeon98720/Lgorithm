@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>643</width>
-    <height>671</height>
+    <height>695</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,7 +85,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>250</y>
+     <y>281</y>
      <width>621</width>
      <height>411</height>
     </rect>
@@ -128,7 +128,7 @@
        </size>
       </property>
       <property name="text">
-       <string>  </string>
+       <string/>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -136,7 +136,10 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_piechart">
+     <layout class="QHBoxLayout" name="label_piechart"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_piechart1">
       <property name="text">
        <string/>
       </property>
@@ -168,7 +171,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>220</y>
+     <y>251</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -181,7 +184,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>200</y>
+     <y>231</y>
      <width>621</width>
      <height>16</height>
     </rect>
@@ -193,8 +196,8 @@
   <widget class="QRadioButton" name="radioButton_count">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>220</y>
+     <x>118</x>
+     <y>251</y>
      <width>95</width>
      <height>21</height>
     </rect>
@@ -206,14 +209,53 @@
   <widget class="QRadioButton" name="radioButton_price">
    <property name="geometry">
     <rect>
-     <x>210</x>
-     <y>220</y>
+     <x>228</x>
+     <y>251</y>
      <width>95</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
     <string>금액</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_offline">
+   <property name="geometry">
+    <rect>
+     <x>228</x>
+     <y>204</y>
+     <width>95</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>오프라인</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>204</y>
+     <width>131</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>구매채널 선택</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="radioButton_online">
+   <property name="geometry">
+    <rect>
+     <x>118</x>
+     <y>204</y>
+     <width>95</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>온라인</string>
    </property>
   </widget>
  </widget>
