@@ -1,6 +1,6 @@
 import os
 import sys
-#
+
 import pylab
 from PyQt5.QtWidgets import *
 from PyQt5.QtChart import QChart, QChartView, QPieSeries, QPieSlice
