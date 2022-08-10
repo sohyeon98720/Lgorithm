@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import apriori
+from neuralCF.recommendation import Recommendation
 
 tbl_demo = pd.read_csv('./LPOINT_BIG_COMP_01_DEMO.csv') # 고객정보
 tbl_pdde = pd.read_csv('./LPOINT_BIG_COMP_02_PDDE.csv') # 상품 구매 정보: 유통사 상품 구매 내역
@@ -37,15 +38,24 @@ class ForUI():
         tmp = []
         tmp.append([list_category[0],len(tbl_pdde[tbl_pdde.cust==cust_id])]) # A
         for i in range(4):
-            tmp.append([list_category[i+1],len(tbl_cop_u[(tbl_cop_u.cust==cust_id) & (tbl_cop_u['cop_c'].str.contains(str(i+66)))])])
+            tmp.append([list_category[i+1],len(tbl_cop_u[(tbl_cop_u.cust==cust_id) & (tbl_cop_u['cop_c'].str.contains(chr(i+66)))])])
         return tmp
 
-    def por_price(self):
-        pass
+    def por_price(self,cust_id):
+        tmp = []
+        tmp.append([list_category[0],sum(tbl_pdde[tbl_pdde.cust == cust_id]['buy_am'])]) # A
+        for i in range(4):
+            tmp.append([list_category[i+1],sum(tbl_cop_u[(tbl_cop_u.cust==cust_id) & (tbl_cop_u['cop_c'].str.contains(chr(i+66)))]['buy_am'])])
+        return tmp
 
     def if_lower_bound(self,cust_id):
         return True if len(tbl_pdde[tbl_pdde.cust==cust_id]) >= lower_bound else False
         # 상위 75프로면 True 아니면 False
+
+    def ncf(self,cust_id):
+        # NCF recommendation system
+        rec = Recommendation()
+        return rec.recommend_items_best5(cust_id)
 
     def most_common(self,cust_id):
         # 구매이력 기반 장바구니 알고리즘(소분류)
