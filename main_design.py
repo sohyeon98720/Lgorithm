@@ -14,19 +14,19 @@ from PyQt5.QtGui import QPainter, QPen
 from PyQt5.QtCore import Qt,QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 import webbrowser
+from PyQt5.QtGui import QDesktopServices
 
 import matplotlib.pyplot as plt
+import seaborn as sns
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
 form_class = uic.loadUiType("design_main.ui")[0]
 form_recom = uic.loadUiType("design_recom.ui")[0]
 
-
 class WindowClass(QMainWindow, form_class):
     def __init__(self):
         super().__init__()
-        self.arr = []
         self.setupUi(self)
         self.setWindowTitle("LPOINT")
         self.if_cust = False
@@ -58,10 +58,10 @@ class WindowClass(QMainWindow, form_class):
     def changeWindowFunction(self):
         if self.if_cust:
             if self.if_history:
-                self.nw_recom = NewWindow(self.cust_id, self.if_history,None)
+                self.nw_recom = NewWindow(self.cust_id, self.if_history, None)
             else:
                 self.Information_event()
-                self.nw_recom = NewWindow(self.cust_id, self.if_history,self.chnl_dv)
+                self.nw_recom = NewWindow(self.cust_id, self.if_history, self.chnl_dv)
         else:
             QMessageBox.information(self, '경고', '모든 정보를 입력해주세요.')
 
@@ -78,15 +78,6 @@ class WindowClass(QMainWindow, form_class):
             self.label_age.setText(cust_info[1])
             self.label_zon.setText(cust_info[2])
             self.if_history = cust_info[3]
-            if self.if_history:
-                hs = "있음"
-                self.arr.append(self.connect.most_common(self.cust_id))
-                ncf_r = self.connect.ncf(self.cust_id)
-                self.arr.append(ncf_r)
-            else:
-                hs = "없음"
-                self.arr = self.connect.for_no_history(self.cust_id, self.chnl_dv)
-            self.label_cust_num.setText(hs)
             self.if_cust = True
             self.piechart_chnl()
         else:  # 고객X
@@ -116,19 +107,20 @@ class WindowClass(QMainWindow, form_class):
             print(e, "main_design.py: piechart_chnl")
             return
 
+
 class NewWindow(QWidget, form_recom):
-    def __init__(self, cust_id, if_history,  chnl_dv):
+    def __init__(self, cust_id, if_history, chnl_dv):
         super().__init__()
         self.connect = ForUI()
         self.cust_id = cust_id
         self.if_history = if_history
         self.chnl_dv = chnl_dv
-        # self.arr = arr
         self.web = QWebEngineView()
         if self.if_history:
             self.arr = self.connect.most_common(self.cust_id)
             arr2 = self.connect.ncf(self.cust_id)
             self.arr.extend(arr2)
+            self.arr = self.connect.recommendation_model(self.cust_id)
         else:
             self.arr = self.connect.for_no_history(self.cust_id, self.chnl_dv)
         self.lower_bound = self.connect.if_lower_bound
@@ -144,20 +136,25 @@ class NewWindow(QWidget, form_recom):
             return '신규 사용자'
 
     def set_recom(self):
-        layout = self.grid_prod            ###TODO: [지혜] 추천 알고리즘 넣을 때 비율 정해서 넣기
+        layout = self.grid_prod  ###TODO: [지혜] 추천 알고리즘 넣을 때 비율 정해서 넣기
         for i in range(len(self.arr)):
             layout.addWidget(self.createLink(i), i // 3, i % 3)  ### TODO: [소현]외부 링크를 통해 사진 및 텍스트로 대체 예정
         self.setLayout(layout)
 
     def createLink(self,i):
         groupbox = QGroupBox(self.arr[i])
-        label_shop = QLabel()
-        label_shop.setText('<a href="https://github.com/sohyeon98720">담기</a>')
+        self.arr[i] = self.arr[i].replace("/", "%2F")
+        mylink = "\"https://www.lotteon.com/search/search/search.ecn?render=search&platform=pc&q=" + self.arr[
+            i] + "&mallId=4\""
+        mytext = '<a href=' + mylink + '>담기</a>'
+        label_shop = QTextBrowser()
+        label_shop.setText(mytext)
         label_shop.setOpenExternalLinks(True)
         vbox = QVBoxLayout()
         vbox.addWidget(label_shop)
         groupbox.setLayout(vbox)
         return groupbox
+
 
     class LinkWindow(QMainWindow):
         def __init__(self):

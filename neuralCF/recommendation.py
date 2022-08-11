@@ -71,8 +71,8 @@ class Recommendation:
         df = pd.DataFrame(p_,columns = ['label','idx']).sort_values(by='label',ascending=False)
         return df
 
-    def recommend_items_best3(self,uid):
-        ranks = list(self._recommendation(uid).iloc[:3,1])
+    def recommend_items_best9(self,uid):
+        ranks = list(self._recommendation(uid).iloc[:9,1])
         lok = list(self.mcls_to_index.keys())
         rec_items = list((map(lambda x : lok[int(x)],ranks)))
         return rec_items
@@ -82,5 +82,5 @@ if __name__ == '__main__':
     recommend = Recommendation()
     uid = 'M569085747'
     # recommend.recommendation(uid)
-    rec_items = recommend.recommend_items_best5(uid)
+    rec_items = recommend.recommend_items_best9(uid)
     print(rec_items)
