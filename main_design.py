@@ -97,10 +97,10 @@ class WindowClass(QMainWindow, form_class):
             self.fig = plt.Figure()
             self.canvas = FigureCanvas(self.fig)
             self.verticalLayout_graph.addWidget(self.canvas)
-
+            colors = sns.color_palette('Paired')[0:2]
             tmp = self.connect.por_chnl(self.cust_id)
             ax = self.fig.add_subplot(111)
-            ax.pie([s[1] for s in tmp],labels=[s[0] for s in tmp],autopct='%.1f%%')
+            ax.pie([s[1] for s in tmp],labels=[s[0] for s in tmp],labeldistance=1.2,colors=colors,wedgeprops = { 'linewidth' : 1.8, 'edgecolor' : 'white' },autopct='%.1f%%')
             self.canvas.draw()
         except Exception as e:
             QMessageBox.information(self, '경고', '구매이력이 없으시군요!')
@@ -139,10 +139,16 @@ class NewWindow(QWidget, form_recom):
 
     def createLink(self,i):
         groupbox = QGroupBox(self.arr[i])
+<<<<<<< HEAD
         self.arr[i] = self.arr[i].replace("/", "%2F")
         mylink = "\"https://www.lotteon.com/search/search/search.ecn?render=search&platform=pc&q=" + self.arr[
             i] + "&mallId=4\""
         mytext = '<a href=' + mylink + '>담기</a>'
+=======
+        self.arr[i] = self.arr[i].replace("/","%2F")
+        mylink = "\"https://www.lotteon.com/search/search/search.ecn?render=search&platform=pc&q="+self.arr[i]+"&mallId=4\""
+        mytext = '<a href='+mylink+'>담기</a>'
+>>>>>>> 88589d08d6117f8794c833747f1d72f80a298cdf
         label_shop = QTextBrowser()
         label_shop.setText(mytext)
         label_shop.setOpenExternalLinks(True)
