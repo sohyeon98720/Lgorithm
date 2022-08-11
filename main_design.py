@@ -117,13 +117,9 @@ class NewWindow(QWidget, form_recom):
         self.chnl_dv = chnl_dv
         self.web = QWebEngineView()
         if self.if_history:
-            self.arr = self.connect.most_common(self.cust_id)
-            arr2 = self.connect.ncf(self.cust_id)
-            self.arr.extend(arr2)
             self.arr = self.connect.recommendation_model(self.cust_id)
         else:
             self.arr = self.connect.for_no_history(self.cust_id, self.chnl_dv)
-        self.lower_bound = self.connect.if_lower_bound
         self.setupUi(self)
         self.setWindowTitle("오늘의 추천 - " + self.title())
         self.show()
