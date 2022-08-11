@@ -23,6 +23,7 @@ form_recom = uic.loadUiType("design_recom.ui")[0]
 class WindowClass(QMainWindow, form_class):
     def __init__(self):
         super().__init__()
+        self.arr = []
         self.setupUi(self)
         self.setWindowTitle("LPOINT")
         self.if_cust = False
@@ -67,12 +68,16 @@ class WindowClass(QMainWindow, form_class):
             self.label_gender.setText(cust_info[0])
             self.label_age.setText(cust_info[1])
             self.label_zon.setText(cust_info[2])
-            if cust_info:
+            self.if_history = cust_info[3]
+            if self.if_history:
                 hs = "있음"
+                self.arr.append(self.connect.most_common(self.cust_id))
+                ncf_r = self.connect.ncf(self.cust_id)
+                self.arr.append(ncf_r)
             else:
                 hs = "없음"
+                self.arr = self.connect.for_no_history(self.cust_id, self.chnl_dv)
             self.label_cust_num.setText(hs)
-            self.if_history = cust_info[3]
             self.if_cust = True
         else:  # 고객X
             QMessageBox.information(self, '경고', '고객 정보가 존재하지 않습니다.')
@@ -169,18 +174,13 @@ class WindowClass(QMainWindow, form_class):
 
 
 class NewWindow(QWidget, form_recom):
-    def __init__(self, cust_id, if_history, chnl_dv):
+    def __init__(self, cust_id, if_history, arr, chnl_dv):
         super().__init__()
         self.connect = ForUI()
         self.cust_id = cust_id
         self.if_history = if_history
         self.chnl_dv = chnl_dv
-        if self.if_history:
-            self.arr = self.connect.most_common(self.cust_id)
-            arr2 = self.connect.ncf(self.cust_id)
-            self.arr.extend(arr2)
-        else:
-            self.arr = self.connect.for_no_history(self.cust_id, self.chnl_dv)
+        self.arr = arr
         self.lower_bound = self.connect.if_lower_bound
         self.setupUi(self)
         self.setWindowTitle("LPOINT")

@@ -37,7 +37,7 @@ def convert_(x):
 
 
 class Recommendation:
-    def __init__(self, weight_file = 'mlp_220807.h5'):
+    def __init__(self, weight_file = 'mlp_220810.h5'):
         self.d = DataLoader(train=False)
         self.mcls = self.d.item_vector['clac_mcls_nm'].unique()
         self.num_mcls = len(self.mcls)
@@ -84,31 +84,3 @@ if __name__ == '__main__':
     # recommend.recommendation(uid)
     rec_items = recommend.recommend_items_best5(uid)
     print(rec_items)
-
-    # def predict_one_mcls(self, uid, mclsidx):
-
-
-        # self.model = MLP(args)
-        # self.datapath = './data/'
-        #
-        # # context vector
-        # self.item_vector = pd.read_csv(os.path.join(self.datapath + 'item.csv'), encoding='utf-8')
-        # self.user_vector = pd.read_csv(os.path.join(self.datapath + 'user.csv'), encoding='utf-8')
-        #
-        # self.item_vector['clac_hlv_nm'] = self.minmax_norm(self.item_vector.iloc[:, [2]])
-        # for i in range(4):
-        #     self.user_vector.iloc[:, [i + 2]] = self.minmax_norm(self.user_vector.iloc[:, [i + 2]])
-        #
-        #     # user vector, context
-        #     self.users = ratings_df["userId"].unique()
-        #     self.num_users = len(self.users)
-        #     self.user_to_index = {user: idx for idx, user in enumerate(self.users)}
-        #     self.user_context = {user: user_context[user_context['cust'] == user].iloc[0, 2:].to_list() for _, user
-        #                          in enumerate(self.users)}
-        #
-        #     # item(mcls)vector, context
-        #     self.mcls = ratings_df["mclsId"].unique()
-        #     self.num_items = len(self.mcls)
-        #     self.mcls_to_index = {mcls: idx for idx, mcls in enumerate(self.mcls)}
-        #     self.mcls_context = {mcls: item_context[item_context['clac_mcls_nm'] == mcls]['clac_hlv_nm'].item() for
-        #                          _, mcls in enumerate(self.mcls)}
