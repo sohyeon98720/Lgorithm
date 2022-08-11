@@ -3,7 +3,7 @@ import sys
 sys.path.insert(0, os.getcwd())
 import pickle
 
-import keras.models
+import tensorflow.keras.models
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -47,7 +47,7 @@ class Recommendation:
         self.user_to_index = user_index()
         self.idx = pd.DataFrame(sorted(self.mcls_to_index.items()))
         wp = os.path.join(WEIGHTPATH,weight_file)
-        self.model = keras.models.load_model(wp)
+        self.model = tf.keras.models.load_model(wp)
 
     def __generate_sample(self, uid_idx, context):
         df = pd.DataFrame(columns=['1', '2', '3', '4', '5', '6', '7'])
@@ -71,8 +71,8 @@ class Recommendation:
         df = pd.DataFrame(p_,columns = ['label','idx']).sort_values(by='label',ascending=False)
         return df
 
-    def recommend_items_best5(self,uid):
-        ranks = list(self._recommendation(uid).iloc[:5,1])
+    def recommend_items_best3(self,uid):
+        ranks = list(self._recommendation(uid).iloc[:3,1])
         lok = list(self.mcls_to_index.keys())
         rec_items = list((map(lambda x : lok[int(x)],ranks)))
         return rec_items
