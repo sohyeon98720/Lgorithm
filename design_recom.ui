@@ -28,17 +28,17 @@
     </property>
    </layout>
   </widget>
-  <widget class="QLabel" name="label_10">
+  <widget class="QLabel" name="cust_cnt">
    <property name="geometry">
     <rect>
-     <x>16</x>
-     <y>9</y>
-     <width>611</width>
-     <height>41</height>
+     <x>490</x>
+     <y>20</y>
+     <width>56</width>
+     <height>12</height>
     </rect>
    </property>
    <property name="text">
-    <string>오늘의 추천</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
