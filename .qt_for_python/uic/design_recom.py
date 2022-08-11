@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/sohyeon/다운로드/lpoint/design_recom.ui'
+# Form implementation generated from reading ui file '/home/sohyeon/다운로드/Lgorithm-main/design_recom.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.7
 #
@@ -22,10 +22,11 @@ class Ui_Dialog(object):
         self.grid_prod.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
         self.grid_prod.setContentsMargins(0, 0, 0, 0)
         self.grid_prod.setObjectName("grid_prod")
-        self.label_10 = QtWidgets.QLabel(Dialog)
-        self.label_10.setGeometry(QtCore.QRect(16, 9, 611, 41))
-        self.label_10.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_10.setObjectName("label_10")
+        self.cust_cnt = QtWidgets.QLabel(Dialog)
+        self.cust_cnt.setGeometry(QtCore.QRect(490, 20, 56, 12))
+        self.cust_cnt.setText("")
+        self.cust_cnt.setAlignment(QtCore.Qt.AlignCenter)
+        self.cust_cnt.setObjectName("cust_cnt")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -33,4 +34,3 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.label_10.setText(_translate("Dialog", "오늘의 추천"))
