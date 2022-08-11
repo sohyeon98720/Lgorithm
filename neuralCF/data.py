@@ -13,7 +13,7 @@ import pickle
 
 
 class DataLoader:
-    def __init__(self, data_path='data\\', csv_generate=False, train=True):
+    def __init__(self, data_path='data/', csv_generate=False, train=True):
         if csv_generate:
             pc = Preprocessing(savepath=data_path)
             pc.data_to_vectors()  # 10분 이상 걸림

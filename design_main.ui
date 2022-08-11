@@ -2,12 +2,15 @@
 <ui version="4.0">
  <class>Dialog</class>
  <widget class="QDialog" name="Dialog">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>643</width>
-    <height>695</height>
+    <height>671</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,74 +88,12 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>281</y>
+     <y>240</y>
      <width>621</width>
-     <height>411</height>
+     <height>381</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item alignment="Qt::AlignHCenter">
-     <widget class="QLabel" name="label_3">
-      <property name="minimumSize">
-       <size>
-        <width>90</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>90</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="text">
-       <string>고객 구매 이력</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item alignment="Qt::AlignHCenter">
-     <widget class="QLabel" name="label_cust_num">
-      <property name="minimumSize">
-       <size>
-        <width>100</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>100</width>
-        <height>20</height>
-       </size>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="label_piechart"/>
-    </item>
-    <item>
-     <widget class="QLabel" name="label_piechart1">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="pushButton_recom">
-      <property name="text">
-       <string>오늘의추천</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <layout class="QVBoxLayout" name="verticalLayout_graph"/>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -171,7 +112,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>251</y>
+     <y>220</y>
      <width>131</width>
      <height>20</height>
     </rect>
@@ -184,7 +125,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>231</y>
+     <y>200</y>
      <width>621</width>
      <height>16</height>
     </rect>
@@ -193,69 +134,20 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioButton_count">
-   <property name="geometry">
-    <rect>
-     <x>118</x>
-     <y>251</y>
-     <width>95</width>
-     <height>21</height>
-    </rect>
+  <widget class="QPushButton" name="pushButton_recom">
+   <property name="enabled">
+    <bool>true</bool>
    </property>
-   <property name="text">
-    <string>횟수</string>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="radioButton_price">
-   <property name="geometry">
-    <rect>
-     <x>228</x>
-     <y>251</y>
-     <width>95</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>금액</string>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="radioButton_offline">
-   <property name="geometry">
-    <rect>
-     <x>228</x>
-     <y>204</y>
-     <width>95</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>오프라인</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>204</y>
-     <width>131</width>
-     <height>20</height>
+     <y>630</y>
+     <width>619</width>
+     <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>구매채널 선택</string>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="radioButton_online">
-   <property name="geometry">
-    <rect>
-     <x>118</x>
-     <y>204</y>
-     <width>95</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>온라인</string>
+    <string>오늘의추천</string>
    </property>
   </widget>
  </widget>
