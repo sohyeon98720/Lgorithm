@@ -1,0 +1,11 @@
+model 
+[518, 224, 192, 128, 64, 64, 32])
+without reg, dropout 0.3
+lr 0.00001
+batch 15000
+epochs 2000
+Adam
+mse
+train loss 0.0202
+test loss 0.0610
+
