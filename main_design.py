@@ -132,23 +132,16 @@ class NewWindow(QWidget, form_recom):
             return '신규 사용자'
 
     def set_recom(self):
-        layout = self.grid_prod  ###TODO: [지혜] 추천 알고리즘 넣을 때 비율 정해서 넣기
+        layout = self.grid_prod
         for i in range(len(self.arr)):
             layout.addWidget(self.createLink(i), i // 3, i % 3)  ### TODO: [소현]외부 링크를 통해 사진 및 텍스트로 대체 예정
         self.setLayout(layout)
 
     def createLink(self,i):
         groupbox = QGroupBox(self.arr[i])
-<<<<<<< HEAD
         self.arr[i] = self.arr[i].replace("/", "%2F")
-        mylink = "\"https://www.lotteon.com/search/search/search.ecn?render=search&platform=pc&q=" + self.arr[
-            i] + "&mallId=4\""
+        mylink = "\"https://www.lotteon.com/search/search/search.ecn?render=search&platform=pc&q=" + self.arr[i] + "&mallId=4\""
         mytext = '<a href=' + mylink + '>담기</a>'
-=======
-        self.arr[i] = self.arr[i].replace("/","%2F")
-        mylink = "\"https://www.lotteon.com/search/search/search.ecn?render=search&platform=pc&q="+self.arr[i]+"&mallId=4\""
-        mytext = '<a href='+mylink+'>담기</a>'
->>>>>>> 88589d08d6117f8794c833747f1d72f80a298cdf
         label_shop = QTextBrowser()
         label_shop.setText(mytext)
         label_shop.setOpenExternalLinks(True)
