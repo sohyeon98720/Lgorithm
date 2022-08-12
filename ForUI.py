@@ -3,6 +3,7 @@ import pandas as pd
 from mlxtend.preprocessing import TransactionEncoder
 from mlxtend.frequent_patterns import apriori
 from neuralCF.recommendation import Recommendation
+import random
 
 tbl_demo = pd.read_csv('./LPOINT_BIG_COMP_01_DEMO.csv') # 고객정보
 tbl_pdde = pd.read_csv('./LPOINT_BIG_COMP_02_PDDE.csv') # 상품 구매 정보: 유통사 상품 구매 내역
@@ -10,10 +11,12 @@ tbl_cop_u = pd.read_csv('./LPOINT_BIG_COMP_03_COP_U.csv') # 제휴사 이용 정
 tbl_pd_clac = pd.read_csv('./LPOINT_BIG_COMP_04_PD_CLAC.csv') # 상품 분류 정보: 유통사 상품 카테고리 마스터
 tbl_br = pd.read_csv('./LPOINT_BIG_COMP_05_BR.csv') # 점포 정보: 유통사/제휴사 점포 마스터
 tbl_lpay = pd.read_csv('./LPOINT_BIG_COMP_06_LPAY.csv') # 엘페이 이용: 엘페이 결제 내역(pdde, cop_u와 중복 가능)
+
 lower_bound75 = np.percentile(list(tbl_pdde.groupby(['cust']).count()['rct_no']), 75)
 lower_bound50 = np.percentile(list(tbl_pdde.groupby(['cust']).count()['rct_no']), 50)
 lower_bound25 = np.percentile(list(tbl_pdde.groupby(['cust']).count()['rct_no']), 25)
-list_category = ['유통사', '숙박업종', '엔터테인먼트', 'F&B', '렌탈업종']
+
+
 class ForUI():
     def __init__(self) -> None:
         pass
@@ -44,17 +47,20 @@ class ForUI():
     def _lower_bound_(self, my_history):  # 구매 이력 상위 75%, 50%, 25% 구간으로 구분
         if my_history >= lower_bound75:
             return 1
-        elif lower_bound75 > my_history >= lower_bound50:
+        elif my_history >= lower_bound50:
             return 2
-        elif lower_bound50 > my_history >= lower_bound25:
+        elif my_history >= lower_bound25:
             return 3
-        else:
+        elif my_history > 1:
             return 4
-#
+        else:
+            return 5
+
     def recommendation_model(self, cust_id):
         myhis = self.my_history(cust_id)
         apri = self.most_common(cust_id)
         ncf = self.ncf(cust_id)
+        print(apri, ncf)
         lowerbound = self._lower_bound_(myhis)
         if lowerbound == 1:
             recommended_items = random.sample(apri, 6) + random.sample(ncf, 3)
@@ -71,7 +77,6 @@ class ForUI():
         else:
             recommended_items = ncf
             return recommended_items
-
 
     def my_history(self, cust_id):
         return len(tbl_pdde[tbl_pdde.cust == cust_id])

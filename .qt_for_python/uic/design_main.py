@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/sohyeon/다운로드/lpoint/design_main.ui'
+# Form implementation generated from reading ui file '/home/sohyeon/다운로드/Lgorithm-main/design_main.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.7
 #
@@ -14,6 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
+        Dialog.setEnabled(True)
         Dialog.resize(643, 671)
         self.pushButton_cust_id = QtWidgets.QPushButton(Dialog)
         self.pushButton_cust_id.setGeometry(QtCore.QRect(530, 10, 101, 71))
@@ -43,18 +44,11 @@ class Ui_Dialog(object):
         self.label_zon.setObjectName("label_zon")
         self.horizontalLayout.addWidget(self.label_zon)
         self.verticalLayoutWidget = QtWidgets.QWidget(Dialog)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 250, 621, 411))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 240, 621, 381))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.label_piechart = QtWidgets.QLabel(self.verticalLayoutWidget)
-        self.label_piechart.setText("")
-        self.label_piechart.setObjectName("label_piechart")
-        self.verticalLayout.addWidget(self.label_piechart)
-        self.pushButton_recom = QtWidgets.QPushButton(self.verticalLayoutWidget)
-        self.pushButton_recom.setObjectName("pushButton_recom")
-        self.verticalLayout.addWidget(self.pushButton_recom)
+        self.verticalLayout_graph = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout_graph.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_graph.setObjectName("verticalLayout_graph")
         self.label = QtWidgets.QLabel(Dialog)
         self.label.setGeometry(QtCore.QRect(10, 90, 71, 20))
         self.label.setObjectName("label")
@@ -66,12 +60,10 @@ class Ui_Dialog(object):
         self.line.setFrameShape(QtWidgets.QFrame.HLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
-        self.radioButton_count = QtWidgets.QRadioButton(Dialog)
-        self.radioButton_count.setGeometry(QtCore.QRect(100, 220, 95, 21))
-        self.radioButton_count.setObjectName("radioButton_count")
-        self.radioButton_price = QtWidgets.QRadioButton(Dialog)
-        self.radioButton_price.setGeometry(QtCore.QRect(210, 220, 95, 21))
-        self.radioButton_price.setObjectName("radioButton_price")
+        self.pushButton_recom = QtWidgets.QPushButton(Dialog)
+        self.pushButton_recom.setEnabled(True)
+        self.pushButton_recom.setGeometry(QtCore.QRect(10, 630, 619, 23))
+        self.pushButton_recom.setObjectName("pushButton_recom")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -81,8 +73,6 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.pushButton_cust_id.setText(_translate("Dialog", "Enter"))
         self.lineEdit_cust_id.setText(_translate("Dialog", "회원번호를 입력해주세요"))
-        self.pushButton_recom.setText(_translate("Dialog", "오늘의추천"))
         self.label.setText(_translate("Dialog", "고객정보"))
         self.label_2.setText(_translate("Dialog", "구매이력조회"))
-        self.radioButton_count.setText(_translate("Dialog", "횟수"))
-        self.radioButton_price.setText(_translate("Dialog", "금액"))
+        self.pushButton_recom.setText(_translate("Dialog", "오늘의추천"))

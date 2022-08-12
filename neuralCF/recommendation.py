@@ -3,7 +3,7 @@ import sys
 sys.path.insert(0, os.getcwd())
 import pickle
 
-import keras.models
+import tensorflow.keras.models
 import numpy as np
 import pandas as pd
 import tensorflow as tf
@@ -37,7 +37,7 @@ def convert_(x):
 
 
 class Recommendation:
-    def __init__(self, weight_file = 'mlp_220807.h5'):
+    def __init__(self, weight_file = 'mlp_220810.h5'):
         self.d = DataLoader(train=False)
         self.mcls = self.d.item_vector['clac_mcls_nm'].unique()
         self.num_mcls = len(self.mcls)
@@ -47,7 +47,7 @@ class Recommendation:
         self.user_to_index = user_index()
         self.idx = pd.DataFrame(sorted(self.mcls_to_index.items()))
         wp = os.path.join(WEIGHTPATH,weight_file)
-        self.model = keras.models.load_model(wp)
+        self.model = tf.keras.models.load_model(wp)
 
     def __generate_sample(self, uid_idx, context):
         df = pd.DataFrame(columns=['1', '2', '3', '4', '5', '6', '7'])
@@ -71,44 +71,18 @@ class Recommendation:
         df = pd.DataFrame(p_,columns = ['label','idx']).sort_values(by='label',ascending=False)
         return df
 
-    def recommend_items_best5(self,uid):
-        ranks = list(self._recommendation(uid).iloc[:5,1])
+    def recommend_items_best9(self,uid):
+        ranks = list(self._recommendation(uid).iloc[:9,1])
         lok = list(self.mcls_to_index.keys())
         rec_items = list((map(lambda x : lok[int(x)],ranks)))
+        try:
+            rec_items.remove('임대매출')
+            rec_items.remove('식당')
+        except:
+            print('recommend_items_best9 error!')
         return rec_items
 
-
-if __name__ == '__main__':
-    recommend = Recommendation()
+if __name__ =='__main__':
     uid = 'M569085747'
-    # recommend.recommendation(uid)
-    rec_items = recommend.recommend_items_best5(uid)
-    print(rec_items)
-
-    # def predict_one_mcls(self, uid, mclsidx):
-
-
-        # self.model = MLP(args)
-        # self.datapath = './data/'
-        #
-        # # context vector
-        # self.item_vector = pd.read_csv(os.path.join(self.datapath + 'item.csv'), encoding='utf-8')
-        # self.user_vector = pd.read_csv(os.path.join(self.datapath + 'user.csv'), encoding='utf-8')
-        #
-        # self.item_vector['clac_hlv_nm'] = self.minmax_norm(self.item_vector.iloc[:, [2]])
-        # for i in range(4):
-        #     self.user_vector.iloc[:, [i + 2]] = self.minmax_norm(self.user_vector.iloc[:, [i + 2]])
-        #
-        #     # user vector, context
-        #     self.users = ratings_df["userId"].unique()
-        #     self.num_users = len(self.users)
-        #     self.user_to_index = {user: idx for idx, user in enumerate(self.users)}
-        #     self.user_context = {user: user_context[user_context['cust'] == user].iloc[0, 2:].to_list() for _, user
-        #                          in enumerate(self.users)}
-        #
-        #     # item(mcls)vector, context
-        #     self.mcls = ratings_df["mclsId"].unique()
-        #     self.num_items = len(self.mcls)
-        #     self.mcls_to_index = {mcls: idx for idx, mcls in enumerate(self.mcls)}
-        #     self.mcls_context = {mcls: item_context[item_context['clac_mcls_nm'] == mcls]['clac_hlv_nm'].item() for
-        #                          _, mcls in enumerate(self.mcls)}
+    rec = Recommendation()
+    print(rec.recommend_items_best9(uid))
