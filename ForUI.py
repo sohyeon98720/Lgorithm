@@ -59,21 +59,21 @@ class ForUI():
         ncf = self.ncf(cust_id)
         lowerbound = self._lower_bound_(myhis)
         if lowerbound == 1:
-            recommended_items = apri[:6]
-            recommended_items.extend(ncf[:3])
+            recommended_items = random.sample(apri, 6) + random.sample(ncf, 3)
             return recommended_items
         elif lowerbound == 2:
-            recommended_items = apri[:5]
-            recommended_items.extend(ncf[:4])
+            recommended_items = random.sample(apri, 5) + random.sample(ncf, 4)
             return recommended_items
         elif lowerbound == 3:
-            recommended_items = apri[:4]
-            recommended_items.extend(ncf[:5])
-            return random.shuffle(recommended_items)
+            recommended_items = random.sample(apri, 4) + random.sample(ncf, 5)
+            return recommended_items
+        elif lowerbound == 4:
+            recommended_items = random.sample(apri, 3) + random.sample(ncf, 6)
+            return recommended_items
         else:
-            recommended_items = apri[:3]
-            recommended_items.extend(ncf[:6])
-            return random.shuffle(recommended_items)
+            recommended_items = ncf
+            return recommended_items
+
 
     def my_history(self, cust_id):
         return len(tbl_pdde[tbl_pdde.cust == cust_id])
