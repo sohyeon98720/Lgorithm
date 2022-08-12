@@ -50,8 +50,10 @@ class ForUI():
             return 2
         elif lower_bound50 > my_history >= lower_bound25:
             return 3
-        else:
+        elif 1 < my_history < lower_bound25:
             return 4
+        else:
+            return 5
 
     def recommendation_model(self, cust_id):
         myhis = self.my_history(cust_id)
@@ -70,10 +72,13 @@ class ForUI():
             recommended_items = apri[:4]
             recommended_items.extend(ncf[:5])
             return random.shuffle(recommended_items)
-        else:
+        elif lowerbound == 4:
             recommended_items = apri[:3]
             recommended_items.extend(ncf[:6])
             return random.shuffle(recommended_items)
+        else:
+            recommended_items = ncf
+            return recommended_items
 
     def my_history(self,cust_id):
         return len(tbl_pdde[tbl_pdde.cust == cust_id])
