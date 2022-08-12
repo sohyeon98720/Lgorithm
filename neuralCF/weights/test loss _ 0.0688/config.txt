@@ -1,0 +1,11 @@
+model 
+[224, 192, 128, 64, 64, 32]
+without reg(only dense layer), dropout 0.2
+lr 0.0001
+batch 15000
+epochs 10000
+Adam
+mse
+train loss 0.0306
+test loss 0.0688
+
