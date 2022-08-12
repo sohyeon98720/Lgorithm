@@ -52,7 +52,7 @@ class ForUI():
             return 3
         else:
             return 4
-
+#
     def recommendation_model(self, cust_id):
         myhis = self.my_history(cust_id)
         apri = self.most_common(cust_id)
