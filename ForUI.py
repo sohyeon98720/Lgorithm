@@ -1,16 +1,3 @@
-import numpy as np#
-import pandas as pd
-from mlxtend.preprocessing import TransactionEncoder
-from mlxtend.frequent_patterns import apriori
-from neuralCF.recommendation import Recommendation
-import random
-
-tbl_demo = pd.read_csv('./LPOINT_BIG_COMP_01_DEMO.csv') # 고객정보
-tbl_pdde = pd.read_csv('./LPOINT_BIG_COMP_02_PDDE.csv') # 상품 구매 정보: 유통사 상품 구매 내역
-tbl_cop_u = pd.read_csv('./LPOINT_BIG_COMP_03_COP_U.csv') # 제휴사 이용 정보: 제휴사 서비스 이용 내역
-tbl_pd_clac = pd.read_csv('./LPOINT_BIG_COMP_04_PD_CLAC.csv') # 상품 분류 정보: 유통사 상품 카테고리 마스터
-tbl_br = pd.read_csv('./LPOINT_BIG_COMP_05_BR.csv') # 점포 정보: 유통사/제휴사 점포 마스터
-tbl_lpay = pd.read_csv('./LPOINT_BIG_COMP_06_LPAY.csv') # 엘페이 이용: 엘페이 결제 내역(pdde, cop_u와 중복 가능)
 lower_bound75 = np.percentile(list(tbl_pdde.groupby(['cust']).count()['rct_no']),75)
 lower_bound50 = np.percentile(list(tbl_pdde.groupby(['cust']).count()['rct_no']),50)
 lower_bound25 = np.percentile(list(tbl_pdde.groupby(['cust']).count()['rct_no']), 25)
@@ -50,10 +37,8 @@ class ForUI():
             return 2
         elif lower_bound50 > my_history >= lower_bound25:
             return 3
-        elif 1 < my_history < lower_bound25:
-            return 4
         else:
-            return 5
+            return 4
 
     def recommendation_model(self, cust_id):
         myhis = self.my_history(cust_id)
@@ -61,21 +46,17 @@ class ForUI():
         ncf = self.ncf(cust_id)
         lowerbound = self._lower_bound_(myhis)
         if lowerbound == 1:
-            recommended_items = apri[:6]
-            recommended_items.extend(ncf[:3])
+            recommended_items = random.sample(apri, 6) + random.sample(ncf, 3)
             return recommended_items
         elif lowerbound == 2:
-            recommended_items = apri[:5]
-            recommended_items.extend(ncf[:4])
+            recommended_items = random.sample(apri, 5) + random.sample(ncf, 4)
             return recommended_items
         elif lowerbound == 3:
-            recommended_items = apri[:4]
-            recommended_items.extend(ncf[:5])
-            return random.shuffle(recommended_items)
+            recommended_items = random.sample(apri, 4) + random.sample(ncf, 5)
+            return recommended_items
         elif lowerbound == 4:
-            recommended_items = apri[:3]
-            recommended_items.extend(ncf[:6])
-            return random.shuffle(recommended_items)
+            recommended_items = random.sample(apri, 3) + random.sample(ncf, 6)
+            return recommended_items
         else:
             recommended_items = ncf
             return recommended_items

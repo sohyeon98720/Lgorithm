@@ -10,7 +10,7 @@ from PyQt5 import uic
 from ForUI import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 # from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5.QtGui import QPainter, QPen
+from PyQt5.QtGui import QPainter, QPen, QIcon
 from PyQt5.QtCore import Qt,QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 import webbrowser
@@ -39,6 +39,10 @@ class WindowClass(QMainWindow, form_class):
         self.pushButton_recom.clicked.connect(self.changeWindowFunction)
         self.connect = ForUI()
 
+        # 창 이름, 로고 변경
+        self.setWindowTitle('Lotte Recommend System')
+        self.setWindowIcon(QIcon('icon_logo2.PNG'))
+
     def _mousePressEvent(self, event):
         self.lineEdit_cust_id.clear()
         # self.lineEdit_cust_id.mousePressEvent = None
@@ -62,6 +66,7 @@ class WindowClass(QMainWindow, form_class):
             else:
                 self.Information_event()
                 self.nw_recom = NewWindow(self.cust_id, self.if_history, self.chnl_dv)
+
         else:
             QMessageBox.information(self, '경고', '모든 정보를 입력해주세요.')
 
@@ -116,6 +121,11 @@ class NewWindow(QWidget, form_recom):
         self.if_history = if_history
         self.chnl_dv = chnl_dv
         self.web = QWebEngineView()
+
+        # 창 이름, 로고 변경
+        self.setWindowTitle('Lotte Recommend System')
+        self.setWindowIcon(QIcon('icon_logo2.PNG'))
+
         if self.if_history:
             self.arr = self.connect.recommendation_model(self.cust_id)
         else:
