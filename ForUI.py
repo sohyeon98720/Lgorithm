@@ -14,8 +14,6 @@ lower_bound75 = np.percentile(list(tbl_pdde.groupby(['cust']).count()['rct_no'])
 lower_bound50 = np.percentile(list(tbl_pdde.groupby(['cust']).count()['rct_no']), 50)
 lower_bound25 = np.percentile(list(tbl_pdde.groupby(['cust']).count()['rct_no']), 25)
 list_category = ['유통사', '숙박업종', '엔터테인먼트', 'F&B', '렌탈업종']
-
-
 class ForUI():
     def __init__(self) -> None:
         pass
