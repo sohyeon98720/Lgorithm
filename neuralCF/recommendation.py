@@ -72,11 +72,14 @@ class Recommendation:
         return df
 
     def recommend_items_best9(self,uid):
-        ranks = list(self._recommendation(uid).iloc[:9,1])
+        items = self._recommendation(uid)
+        ranks = list(items.iloc[:9,1])
         lok = list(self.mcls_to_index.keys())
         rec_items = list((map(lambda x : lok[int(x)],ranks)))
-        return rec_items
-
+        try:
+            rec_items.remove('임대매출','식당',)
+        except:
+            pass
 
 if __name__ == '__main__':
     recommend = Recommendation()
