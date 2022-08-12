@@ -28,35 +28,6 @@
     </property>
    </layout>
   </widget>
-  <widget class="QLabel" name="label_10">
-   <property name="geometry">
-    <rect>
-     <x>16</x>
-     <y>9</y>
-     <width>321</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>오늘의 추천</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>420</x>
-     <y>20</y>
-     <width>71</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>구매 횟수 :</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="cust_cnt">
    <property name="geometry">
     <rect>
@@ -67,7 +38,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>  </string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

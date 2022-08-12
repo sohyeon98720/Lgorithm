@@ -140,7 +140,7 @@ class NewWindow(QWidget, form_recom):
             return '구매횟수:'+str(self.connect.my_history(self.cust_id))
         else:
             return '신규 사용자'
-#
+
     def set_recom(self):
         layout = self.grid_prod
         for i in range(len(self.arr)):

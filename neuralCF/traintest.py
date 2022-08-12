@@ -60,7 +60,7 @@ class TrainTest:
         if self.train:
             self.dload = DataLoader()
             self.x_train, self.y_train = self.dload.generate_train()
-
+            self.x_test, self.y_test = self.dload.generate_test()
             model = MLP(args)
             self.model = model.get_model()
         else:
