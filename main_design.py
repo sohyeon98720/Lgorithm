@@ -5,7 +5,7 @@ import webbrowser
 
 import pylab
 from PyQt5.QtWidgets import *
-from PyQt5.QtChart import QChart, QChartView, QPieSeries, QPieSlice
+# from PyQt5.QtChart import QChart, QChartView, QPieSeries, QPieSlice
 from PyQt5 import uic
 from ForUI import *
 from PyQt5 import QtCore, QtGui, QtWidgets
